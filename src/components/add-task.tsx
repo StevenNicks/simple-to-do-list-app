@@ -28,7 +28,11 @@ import { TaskStatus } from "@/components/task/task.types"
 export function AddTask() {
    const [title, setTitle] = useState("")
    const [description, setDescription] = useState("")
-   const [status, setStatus] = useState("")
+   const [status, setStatus] = useState<TaskStatus>("In process")
+   const [date] = useState<string>(
+      new Date().toISOString().split("T")[0]
+   )
+
 
    const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault()
@@ -37,7 +41,7 @@ export function AddTask() {
          title,
          description,
          status,
-         date: new Date().toISOString().split("T")[0]
+         date: date || new Date().toISOString().split("T")[0],
       }
 
       console.log("TASK:", newTask)
@@ -102,6 +106,18 @@ export function AddTask() {
                            <SelectItem value="Delete">Delete</SelectItem>
                         </SelectContent>
                      </Select>
+                  </div>
+
+                  {/* Date */}
+                  {/* Date */}
+                  <div className="grid gap-2">
+                     <Label htmlFor="date">Date</Label>
+                     <Input
+                        id="date"
+                        type="date"
+                        value={date}
+                        disabled
+                     />
                   </div>
                </div>
 

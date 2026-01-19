@@ -24,9 +24,12 @@ interface TaskData {
 export function List() {
    // Casteamos una sola vez la data local
    const typedTasks = tasks as TaskData[]
-   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
 
-   // En el filtro de List.tsx
+   // Inicializamos con la fecha de hoy
+   const today = new Date()
+   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+
+   // Filtrado de tareas según la fecha seleccionada
    const filteredTasks = selectedDate
       ? typedTasks.filter(task =>
          task.date === selectedDate.toISOString().split('T')[0]
@@ -47,11 +50,10 @@ export function List() {
                   />
                   {selectedDate && (
                      <Button
-                        variant="ghost"
-                        size="sm"
+                        variant="default"
                         onClick={() => setSelectedDate(undefined)}
                      >
-                        Ver todas
+                        View all
                      </Button>
                   )}
                   <AddTask />

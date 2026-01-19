@@ -1,29 +1,71 @@
 [
    {
       "id": 1,
-      "title": "New Version",
-      "description": "Lorem ipsum dolor sit amet consectetur...",
-      "status": "In process",
-      "date": "2024-08-30"
+      "title": "Finish monthly report",
+      "description": "Compile data and submit report to management",
+      "status": "Completed",
+      "date": "2026-01-18"
    },
    {
       "id": 2,
-      "title": "Fix bugs",
-      "description": "Corregir errores en producción",
-      "status": "Completed",
-      "date": "2024-08-31"
+      "title": "Fix login bug",
+      "description": "Resolve login errors on mobile devices",
+      "status": "In process",
+      "date": "2026-01-18"
    },
    {
       "id": 3,
-      "title": "Remove legacy code",
-      "description": "Eliminar código antiguo",
-      "status": "Delete",
-      "date": "2024-09-01"
+      "title": "Update client database",
+      "description": "Add new client contacts and verify details",
+      "status": "In process",
+      "date": "2026-01-18"
    },
    {
       "id": 4,
-      "title": "Remove legacy code",
-      "description": "Eliminar código antiguo",
+      "title": "Clean up old files",
+      "description": "Remove outdated files from shared drive",
+      "status": "Delete",
+      "date": "2026-01-18"
+   },
+   {
+      "id": 5,
+      "title": "Code review",
+      "description": "Review pull requests submitted by the dev team",
+      "status": "Completed",
+      "date": "2026-01-18"
+   },
+   {
+      "id": 6,
+      "title": "Prepare presentation slides",
+      "description": "Slides for client meeting later today",
+      "status": "In process",
+      "date": "2026-01-19"
+   },
+   {
+      "id": 7,
+      "title": "Team stand-up",
+      "description": "Daily morning meeting with the team",
+      "status": "Completed",
+      "date": "2026-01-19"
+   },
+   {
+      "id": 8,
+      "title": "Fix UI alignment issue",
+      "description": "Correct layout problems in dashboard",
+      "status": "In process",
+      "date": "2026-01-19"
+   },
+   {
+      "id": 9,
+      "title": "Update newsletter template",
+      "description": "Correct formatting and content errors",
+      "status": "Completed",
+      "date": "2026-01-19"
+   },
+   {
+      "id": 10,
+      "title": "Remove test accounts",
+      "description": "Delete outdated test user accounts",
       "status": "Delete",
       "date": "2026-01-19"
    }

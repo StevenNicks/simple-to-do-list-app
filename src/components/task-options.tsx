@@ -13,42 +13,23 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Ellipsis, Pencil  } from "lucide-react"
+import { X, Pencil } from "lucide-react"
 
 export function TaskOptions() {
    return (
-      <DropdownMenu>
-         <DropdownMenuTrigger asChild>
-            <Button size="icon" variant={"outline"}>
-               <Ellipsis className="size-4 stroke-3" />
-            </Button>
-         </DropdownMenuTrigger>
-         <DropdownMenuContent className="w-56" align="start">
-            <DropdownMenuLabel>Task options</DropdownMenuLabel>
-            <DropdownMenuGroup>
-               <DropdownMenuItem>
-                  Edit task
-               </DropdownMenuItem>
-               <DropdownMenuItem>
-                  Mark task
-               </DropdownMenuItem>
-               <DropdownMenuItem>
-                  Delete task
-               </DropdownMenuItem>
-               <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                     Change state
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                     <DropdownMenuSubContent>
-                        <DropdownMenuItem>In progress</DropdownMenuItem>
-                        <DropdownMenuItem>Completed</DropdownMenuItem>
-                        <DropdownMenuItem>Delayed</DropdownMenuItem>
-                     </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-               </DropdownMenuSub>
-            </DropdownMenuGroup>
-         </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex items-center gap-3">
+         <Button
+            variant="outline"
+            size="icon"
+         >
+            <Pencil className="size-4" />
+         </Button>
+         <Button
+            variant="destructive"
+            size="icon"
+         >
+            <X className="stroke-3 size-4" />
+         </Button>
+      </div>
    )
 }
