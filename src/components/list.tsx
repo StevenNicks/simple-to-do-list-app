@@ -37,7 +37,7 @@ export function List() {
       : typedTasks
 
    return (
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-xl">
          <Card className="rounded-xl shadow-xl/30 py-3 gap-0">
             <CardHeader className="flex flex-row items-center justify-between pb-3">
                <CardTitle className="text-base font-semibold">
