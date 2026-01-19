@@ -1,0 +1,30 @@
+[
+   {
+      "id": 1,
+      "title": "New Version",
+      "description": "Lorem ipsum dolor sit amet consectetur...",
+      "status": "In process",
+      "date": "2024-08-30"
+   },
+   {
+      "id": 2,
+      "title": "Fix bugs",
+      "description": "Corregir errores en producción",
+      "status": "Completed",
+      "date": "2024-08-31"
+   },
+   {
+      "id": 3,
+      "title": "Remove legacy code",
+      "description": "Eliminar código antiguo",
+      "status": "Delete",
+      "date": "2024-09-01"
+   },
+   {
+      "id": 4,
+      "title": "Remove legacy code",
+      "description": "Eliminar código antiguo",
+      "status": "Delete",
+      "date": "2026-01-19"
+   }
+]
