@@ -2,7 +2,7 @@
 
 import { CalendarX2, ListChecks, Plus } from "lucide-react"
 
-import type { Task } from "@/lib/types"
+import type { Task, TaskStatus } from "@/lib/types"
 import { TaskRow } from "@/components/todo/task-row"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,7 +19,7 @@ interface TaskListProps {
    hasAnyTask: boolean
    onCreate: () => void
    onClearFilters: () => void
-   onToggleDone: (task: Task) => void
+   onStatusChange: (task: Task, status: TaskStatus) => void
    onEdit: (task: Task) => void
    onDelete: (task: Task) => void
 }
@@ -29,7 +29,7 @@ export function TaskList({
    hasAnyTask,
    onCreate,
    onClearFilters,
-   onToggleDone,
+   onStatusChange,
    onEdit,
    onDelete,
 }: TaskListProps) {
@@ -71,7 +71,7 @@ export function TaskList({
             <li key={task.id}>
                <TaskRow
                   task={task}
-                  onToggleDone={onToggleDone}
+                  onStatusChange={onStatusChange}
                   onEdit={onEdit}
                   onDelete={onDelete}
                />
