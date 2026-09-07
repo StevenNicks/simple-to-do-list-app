@@ -20,8 +20,7 @@ interface TaskListProps {
    onCreate: () => void
    onClearFilters: () => void
    onStatusChange: (task: Task, status: TaskStatus) => void
-   onEdit: (task: Task) => void
-   onDelete: (task: Task) => void
+   onOpenDetail: (task: Task) => void
 }
 
 export function TaskList({
@@ -30,8 +29,7 @@ export function TaskList({
    onCreate,
    onClearFilters,
    onStatusChange,
-   onEdit,
-   onDelete,
+   onOpenDetail,
 }: TaskListProps) {
    if (tasks.length === 0) {
       return (
@@ -72,8 +70,7 @@ export function TaskList({
                <TaskRow
                   task={task}
                   onStatusChange={onStatusChange}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
+                  onOpenDetail={onOpenDetail}
                />
             </li>
          ))}

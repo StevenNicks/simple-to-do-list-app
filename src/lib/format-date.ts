@@ -21,6 +21,11 @@ export function formatMediumDate(value: string): string {
    return format(fromISODate(value), "d MMM yyyy", { locale: es })
 }
 
+/** "18 de enero de 2026, 14:05" — from a timestamp in ms. */
+export function formatTimestamp(ms: number): string {
+   return format(new Date(ms), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })
+}
+
 /** Short, relative-aware label: "Hoy", "Mañana", "Ayer" or "18 ene". */
 export function formatShortDate(value: string): string {
    const date = fromISODate(value)

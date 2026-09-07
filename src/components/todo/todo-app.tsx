@@ -11,6 +11,7 @@ import { matchesDateFilter } from "@/lib/date-filter"
 import { ModeSwitcher } from "@/components/mode-switcher"
 import { DateFilter } from "@/components/todo/date-filter"
 import { DeleteTaskDialog } from "@/components/todo/delete-task-dialog"
+import { TaskDetailDialog } from "@/components/todo/task-detail-dialog"
 import { TaskFormDialog } from "@/components/todo/task-form-dialog"
 import { TaskList } from "@/components/todo/task-list"
 import { useTasks, type TaskDraft } from "@/hooks/use-tasks"
@@ -47,6 +48,7 @@ export function TodoApp() {
    const [formOpen, setFormOpen] = React.useState(false)
    const [editingTask, setEditingTask] = React.useState<Task | null>(null)
    const [deleteTarget, setDeleteTarget] = React.useState<Task | null>(null)
+   const [detailTask, setDetailTask] = React.useState<Task | null>(null)
 
    const counts = React.useMemo(() => {
       const base = {
@@ -126,7 +128,7 @@ export function TodoApp() {
    return (
       <div className="flex w-full max-w-lg flex-col">
          <Card className="grid max-h-[calc(100svh-2rem)] grid-rows-[auto_minmax(0,1fr)_auto] gap-0 overflow-hidden py-0 shadow-xl sm:max-h-[calc(100svh-5rem)]">
-            <CardHeader className="shrink-0 gap-4 border-b !p-4 [.border-b]:!pb-4">
+            <CardHeader className="min-w-0 shrink-0 gap-4 border-b !p-4 [.border-b]:!pb-4">
                <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 space-y-0.5">
                      <h1 className="text-base leading-none font-semibold tracking-tight">
@@ -154,8 +156,9 @@ export function TodoApp() {
                <Tabs
                   value={statusFilter}
                   onValueChange={(value) => setStatusFilter(value as StatusFilter)}
+                  className="min-w-0"
                >
-                  <div className="-mx-1 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  <ScrollArea orientation="horizontal" className="w-full">
                      <TabsList className="w-full min-w-max">
                         {FILTER_TABS.map((tab) => (
                            <TabsTrigger
@@ -170,7 +173,7 @@ export function TodoApp() {
                            </TabsTrigger>
                         ))}
                      </TabsList>
-                  </div>
+                  </ScrollArea>
                </Tabs>
             </CardHeader>
 
@@ -189,15 +192,14 @@ export function TodoApp() {
                      ))}
                   </div>
                ) : (
-                  <ScrollArea type="auto" className="h-full">
+                  <ScrollArea type="always" hideScrollbar className="h-full">
                      <TaskList
                         tasks={visibleTasks}
                         hasAnyTask={tasks.length > 0}
                         onCreate={openCreate}
                         onClearFilters={clearFilters}
                         onStatusChange={handleStatusChange}
-                        onEdit={openEdit}
-                        onDelete={setDeleteTarget}
+                        onOpenDetail={setDetailTask}
                      />
                   </ScrollArea>
                )}
@@ -222,6 +224,19 @@ export function TodoApp() {
             </CardFooter>
          </Card>
 
+         <TaskDetailDialog
+            task={detailTask}
+            open={detailTask !== null}
+            onOpenChange={(open) => !open && setDetailTask(null)}
+            onEdit={(task) => {
+               setDetailTask(null)
+               openEdit(task)
+            }}
+            onDelete={(task) => {
+               setDetailTask(null)
+               setDeleteTarget(task)
+            }}
+         />
          <TaskFormDialog
             open={formOpen}
             onOpenChange={setFormOpen}
