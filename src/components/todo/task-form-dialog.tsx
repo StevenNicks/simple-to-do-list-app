@@ -84,7 +84,10 @@ export function TaskFormDialog({
    return (
       <Dialog open={open} onOpenChange={onOpenChange}>
          <DialogContent className="sm:max-w-md">
-            <form onSubmit={handleSubmit}>
+            <form
+               onSubmit={handleSubmit}
+               className="grid max-h-[85dvh] grid-rows-[auto_minmax(0,1fr)_auto] gap-4"
+            >
                <DialogHeader>
                   <DialogTitle>{isEdit ? "Editar tarea" : "Nueva tarea"}</DialogTitle>
                   <DialogDescription>
@@ -94,7 +97,7 @@ export function TaskFormDialog({
                   </DialogDescription>
                </DialogHeader>
 
-               <div className="grid gap-4 py-4">
+               <div className="grid min-h-0 gap-4 overflow-y-auto py-1 pr-1">
                   <div className="grid gap-2">
                      <Label htmlFor="task-title">Título</Label>
                      <Input
@@ -121,7 +124,7 @@ export function TaskFormDialog({
                            }))
                         }
                         placeholder="Detalles, contexto o pasos a seguir (opcional)"
-                        className="min-h-24 resize-none"
+                        className="max-h-56 min-h-24 resize-none"
                      />
                   </div>
 
