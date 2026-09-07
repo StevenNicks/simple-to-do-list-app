@@ -1,0 +1,50 @@
+[
+   {
+      "id": "seed-1",
+      "title": "Cerrar el reporte mensual",
+      "description": "Revisar los números de agosto y enviarlo al equipo de dirección antes del mediodía.",
+      "status": "in-progress",
+      "date": "2026-09-06",
+      "createdAt": 1757116800000
+   },
+   {
+      "id": "seed-2",
+      "title": "Preparar la demo para el cliente",
+      "description": "Actualizar las diapositivas y ensayar el flujo de la nueva pantalla de tareas.",
+      "status": "todo",
+      "date": "2026-09-06",
+      "createdAt": 1757116800001
+   },
+   {
+      "id": "seed-3",
+      "title": "Responder correos pendientes",
+      "description": "Bandeja de entrada de soporte y seguimiento con proveedores.",
+      "status": "done",
+      "date": "2026-09-06",
+      "createdAt": 1757116800002
+   },
+   {
+      "id": "seed-4",
+      "title": "Revisar pull requests del equipo",
+      "description": "Dos PR abiertos en el repositorio de la app, dejar comentarios y aprobar si todo está bien.",
+      "status": "todo",
+      "date": "2026-09-07",
+      "createdAt": 1757203200000
+   },
+   {
+      "id": "seed-5",
+      "title": "Planificar el sprint",
+      "description": "Definir objetivos, estimar historias y repartir el trabajo para las próximas dos semanas.",
+      "status": "todo",
+      "date": "2026-09-08",
+      "createdAt": 1757289600000
+   },
+   {
+      "id": "seed-6",
+      "title": "Actualizar la documentación",
+      "description": "Añadir la sección de instalación y las variables de entorno que faltan en el README.",
+      "status": "in-progress",
+      "date": "2026-09-05",
+      "createdAt": 1757030400000
+   }
+]
