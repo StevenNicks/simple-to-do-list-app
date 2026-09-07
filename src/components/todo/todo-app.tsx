@@ -4,9 +4,10 @@ import * as React from "react"
 import { Plus } from "lucide-react"
 import { toast } from "sonner"
 
-import type { StatusFilter, Task, TaskStatus } from "@/lib/types"
+import type { DateFilterValue, StatusFilter, Task, TaskStatus } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { formatLongDate, toISODate } from "@/lib/format-date"
+import { matchesDateFilter } from "@/lib/date-filter"
 import { ModeSwitcher } from "@/components/mode-switcher"
 import { DateFilter } from "@/components/todo/date-filter"
 import { DeleteTaskDialog } from "@/components/todo/delete-task-dialog"
@@ -37,13 +38,11 @@ export function TodoApp() {
       useTasks()
 
    const [statusFilter, setStatusFilter] = React.useState<StatusFilter>("all")
-   const [dateFilter, setDateFilter] = React.useState<Date | undefined>(undefined)
+   const [dateFilter, setDateFilter] = React.useState<DateFilterValue | null>(null)
 
    const [formOpen, setFormOpen] = React.useState(false)
    const [editingTask, setEditingTask] = React.useState<Task | null>(null)
    const [deleteTarget, setDeleteTarget] = React.useState<Task | null>(null)
-
-   const isoDateFilter = dateFilter ? toISODate(dateFilter) : undefined
 
    const counts = React.useMemo(() => {
       const base = { all: tasks.length, todo: 0, "in-progress": 0, done: 0 }
@@ -54,7 +53,7 @@ export function TodoApp() {
    const visibleTasks = React.useMemo(() => {
       return tasks
          .filter((task) => statusFilter === "all" || task.status === statusFilter)
-         .filter((task) => !isoDateFilter || task.date === isoDateFilter)
+         .filter((task) => matchesDateFilter(task.date, dateFilter))
          .sort((a, b) => {
             if (STATUS_RANK[a.status] !== STATUS_RANK[b.status]) {
                return STATUS_RANK[a.status] - STATUS_RANK[b.status]
@@ -62,7 +61,7 @@ export function TodoApp() {
             if (a.date !== b.date) return a.date < b.date ? -1 : 1
             return b.createdAt - a.createdAt
          })
-   }, [tasks, statusFilter, isoDateFilter])
+   }, [tasks, statusFilter, dateFilter])
 
    const doneCount = counts.done
    const progress = tasks.length ? Math.round((doneCount / tasks.length) * 100) : 0
@@ -108,7 +107,7 @@ export function TodoApp() {
 
    function clearFilters() {
       setStatusFilter("all")
-      setDateFilter(undefined)
+      setDateFilter(null)
    }
 
    return (

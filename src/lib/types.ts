@@ -11,3 +11,10 @@ export interface Task {
 }
 
 export type StatusFilter = TaskStatus | "all"
+
+/** Date filter for the task list. `null` means "all dates". */
+export type DateFilterValue =
+   | { mode: "day"; date: string }
+   | { mode: "range"; from: string; to: string }
+   | { mode: "month"; year: number; month: number }
+   | { mode: "year"; year: number }
