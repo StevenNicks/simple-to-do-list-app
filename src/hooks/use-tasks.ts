@@ -3,7 +3,6 @@
 import * as React from "react"
 
 import type { Task, TaskStatus } from "@/lib/types"
-import seedTasks from "@/data/seed-tasks.json"
 
 const STORAGE_KEY = "todo.tasks.v1"
 
@@ -19,14 +18,14 @@ function createId(): string {
 }
 
 function readStorage(): Task[] {
-   if (typeof window === "undefined") return seedTasks as Task[]
+   if (typeof window === "undefined") return []
    try {
       const raw = window.localStorage.getItem(STORAGE_KEY)
-      if (!raw) return seedTasks as Task[]
+      if (!raw) return []
       const parsed = JSON.parse(raw) as Task[]
-      return Array.isArray(parsed) ? parsed : (seedTasks as Task[])
+      return Array.isArray(parsed) ? parsed : []
    } catch {
-      return seedTasks as Task[]
+      return []
    }
 }
 
@@ -46,7 +45,7 @@ export interface TaskDraft {
 }
 
 export function useTasks() {
-   const [tasks, setTasks] = React.useState<Task[]>(seedTasks as Task[])
+   const [tasks, setTasks] = React.useState<Task[]>([])
    const [mounted, setMounted] = React.useState(false)
 
    React.useEffect(() => {
