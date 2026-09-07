@@ -106,8 +106,8 @@ export function TaskRow({ task, onStatusChange, onEdit, onDelete }: TaskRowProps
             )}
 
             <div className="mt-2 flex items-center gap-2">
-               <Badge variant="secondary" className="gap-1.5 font-normal">
-                  <meta.icon className={cn("size-3", meta.dot)} />
+               <Badge className={cn("gap-1.5 font-normal", meta.badge)}>
+                  <meta.icon className="size-3 text-current" />
                   {meta.label}
                </Badge>
                <span className="text-xs text-muted-foreground">
