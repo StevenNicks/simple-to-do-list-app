@@ -7,6 +7,17 @@ import seedTasks from "@/data/seed-tasks.json"
 
 const STORAGE_KEY = "todo.tasks.v1"
 
+/**
+ * `crypto.randomUUID` only exists in secure contexts (https / localhost). When
+ * the app is opened over a plain-HTTP LAN IP it's undefined, so fall back.
+ */
+function createId(): string {
+   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID()
+   }
+   return `id-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+}
+
 function readStorage(): Task[] {
    if (typeof window === "undefined") return seedTasks as Task[]
    try {
@@ -50,7 +61,7 @@ export function useTasks() {
    const addTask = React.useCallback((draft: TaskDraft) => {
       const task: Task = {
          ...draft,
-         id: crypto.randomUUID(),
+         id: createId(),
          createdAt: Date.now(),
       }
       setTasks((prev) => [task, ...prev])
