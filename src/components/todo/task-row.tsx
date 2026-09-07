@@ -27,7 +27,7 @@ interface TaskRowProps {
 
 export function TaskRow({ task, onStatusChange, onEdit, onDelete }: TaskRowProps) {
    const meta = STATUS_META[task.status]
-   const done = task.status === "done"
+   const closed = task.status === "done" || task.status === "cancelled"
 
    return (
       <div className="group relative flex gap-3 px-4 py-3 transition-colors hover:bg-muted/50">
@@ -65,7 +65,7 @@ export function TaskRow({ task, onStatusChange, onEdit, onDelete }: TaskRowProps
                <p
                   className={cn(
                      "text-sm font-medium leading-tight",
-                     done && "text-muted-foreground line-through"
+                     closed && "text-muted-foreground line-through"
                   )}
                >
                   {task.title}

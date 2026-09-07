@@ -22,15 +22,19 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const STATUS_RANK: Record<Task["status"], number> = {
    todo: 0,
-   "in-progress": 1,
-   done: 2,
+   blocked: 1,
+   "in-progress": 2,
+   done: 3,
+   cancelled: 4,
 }
 
 const FILTER_TABS: { value: StatusFilter; label: string }[] = [
    { value: "all", label: "Todas" },
    { value: "todo", label: "Pendiente" },
+   { value: "blocked", label: "Bloqueada" },
    { value: "in-progress", label: "En curso" },
    { value: "done", label: "Hechas" },
+   { value: "cancelled", label: "Cancelada" },
 ]
 
 export function TodoApp() {
@@ -45,7 +49,14 @@ export function TodoApp() {
    const [deleteTarget, setDeleteTarget] = React.useState<Task | null>(null)
 
    const counts = React.useMemo(() => {
-      const base = { all: tasks.length, todo: 0, "in-progress": 0, done: 0 }
+      const base = {
+         all: tasks.length,
+         todo: 0,
+         blocked: 0,
+         "in-progress": 0,
+         done: 0,
+         cancelled: 0,
+      }
       for (const task of tasks) base[task.status] += 1
       return base
    }, [tasks])
@@ -64,7 +75,9 @@ export function TodoApp() {
    }, [tasks, statusFilter, dateFilter])
 
    const doneCount = counts.done
-   const progress = tasks.length ? Math.round((doneCount / tasks.length) * 100) : 0
+   // Cancelled tasks are out of scope for progress: they're closed, not pending.
+   const trackable = tasks.length - counts.cancelled
+   const progress = trackable > 0 ? Math.round((doneCount / trackable) * 100) : 0
 
    function openCreate() {
       setEditingTask(null)
@@ -142,20 +155,22 @@ export function TodoApp() {
                   value={statusFilter}
                   onValueChange={(value) => setStatusFilter(value as StatusFilter)}
                >
-                  <TabsList className="w-full">
-                     {FILTER_TABS.map((tab) => (
-                        <TabsTrigger
-                           key={tab.value}
-                           value={tab.value}
-                           className="min-w-0 gap-1 px-1.5 text-xs data-[state=inactive]:text-muted-foreground"
-                        >
-                           <span className="truncate">{tab.label}</span>
-                           <span className="shrink-0 tabular-nums opacity-50">
-                              {counts[tab.value]}
-                           </span>
-                        </TabsTrigger>
-                     ))}
-                  </TabsList>
+                  <div className="-mx-1 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                     <TabsList className="w-full min-w-max">
+                        {FILTER_TABS.map((tab) => (
+                           <TabsTrigger
+                              key={tab.value}
+                              value={tab.value}
+                              className="min-w-max flex-1 gap-1 px-2 text-xs data-[state=inactive]:text-muted-foreground"
+                           >
+                              <span>{tab.label}</span>
+                              <span className="tabular-nums opacity-50">
+                                 {counts[tab.value]}
+                              </span>
+                           </TabsTrigger>
+                        ))}
+                     </TabsList>
+                  </div>
                </Tabs>
             </CardHeader>
 
@@ -191,7 +206,7 @@ export function TodoApp() {
             <CardFooter className="shrink-0 flex-col items-stretch gap-2 border-t p-4">
                <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>
-                     {doneCount} de {tasks.length} completadas
+                     {doneCount} de {trackable} completadas
                   </span>
                   <span className="tabular-nums">{progress}%</span>
                </div>

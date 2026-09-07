@@ -1,4 +1,11 @@
-import { Circle, CircleDashed, CircleCheck, type LucideIcon } from "lucide-react"
+import {
+   Circle,
+   CircleCheck,
+   CircleDashed,
+   CircleSlash,
+   CircleX,
+   type LucideIcon,
+} from "lucide-react"
 
 import type { TaskStatus } from "@/lib/types"
 
@@ -18,6 +25,13 @@ export const STATUS_META: Record<TaskStatus, StatusMeta> = {
       dot: "text-muted-foreground",
       badge: "border-border bg-muted text-muted-foreground",
    },
+   blocked: {
+      label: "Bloqueada",
+      icon: CircleSlash,
+      dot: "text-rose-500 dark:text-rose-400",
+      badge:
+         "border-rose-600/30 bg-rose-600/10 text-rose-600 dark:border-rose-400/30 dark:bg-rose-400/10 dark:text-rose-400",
+   },
    "in-progress": {
       label: "En progreso",
       icon: Circle,
@@ -32,6 +46,18 @@ export const STATUS_META: Record<TaskStatus, StatusMeta> = {
       badge:
          "border-emerald-600/30 bg-emerald-600/10 text-emerald-600 dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400",
    },
+   cancelled: {
+      label: "Cancelada",
+      icon: CircleX,
+      dot: "text-muted-foreground",
+      badge: "border-border bg-transparent text-muted-foreground",
+   },
 }
 
-export const STATUS_ORDER: TaskStatus[] = ["todo", "in-progress", "done"]
+export const STATUS_ORDER: TaskStatus[] = [
+   "todo",
+   "blocked",
+   "in-progress",
+   "done",
+   "cancelled",
+]
