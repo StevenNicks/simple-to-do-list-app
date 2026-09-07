@@ -28,7 +28,7 @@ const STATUS_RANK: Record<Task["status"], number> = {
 
 const FILTER_TABS: { value: StatusFilter; label: string }[] = [
    { value: "all", label: "Todas" },
-   { value: "todo", label: "Por hacer" },
+   { value: "todo", label: "Pendiente" },
    { value: "in-progress", label: "En curso" },
    { value: "done", label: "Hechas" },
 ]

@@ -13,7 +13,7 @@ interface StatusMeta {
 
 export const STATUS_META: Record<TaskStatus, StatusMeta> = {
    todo: {
-      label: "Por hacer",
+      label: "Pendiente",
       icon: CircleDashed,
       dot: "text-muted-foreground",
       badge: "border-border bg-muted text-muted-foreground",
