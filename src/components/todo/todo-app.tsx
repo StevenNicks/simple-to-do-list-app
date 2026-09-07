@@ -4,7 +4,7 @@ import * as React from "react"
 import { Plus } from "lucide-react"
 import { toast } from "sonner"
 
-import type { StatusFilter, Task } from "@/lib/types"
+import type { StatusFilter, Task, TaskStatus } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { formatLongDate, toISODate } from "@/lib/format-date"
 import { ModeSwitcher } from "@/components/mode-switcher"
@@ -87,8 +87,9 @@ export function TodoApp() {
       }
    }
 
-   function handleToggleDone(task: Task) {
-      setStatus(task.id, task.status === "done" ? "todo" : "done")
+   function handleStatusChange(task: Task, status: TaskStatus) {
+      if (status === task.status) return
+      setStatus(task.id, status)
    }
 
    function confirmDelete() {
@@ -180,7 +181,7 @@ export function TodoApp() {
                         hasAnyTask={tasks.length > 0}
                         onCreate={openCreate}
                         onClearFilters={clearFilters}
-                        onToggleDone={handleToggleDone}
+                        onStatusChange={handleStatusChange}
                         onEdit={openEdit}
                         onDelete={setDeleteTarget}
                      />

@@ -2,40 +2,63 @@
 
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react"
 
-import type { Task } from "@/lib/types"
+import type { Task, TaskStatus } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { formatShortDate } from "@/lib/format-date"
-import { STATUS_META } from "@/components/todo/status"
+import { STATUS_META, STATUS_ORDER } from "@/components/todo/status"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
+   DropdownMenuRadioGroup,
+   DropdownMenuRadioItem,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 interface TaskRowProps {
    task: Task
-   onToggleDone: (task: Task) => void
+   onStatusChange: (task: Task, status: TaskStatus) => void
    onEdit: (task: Task) => void
    onDelete: (task: Task) => void
 }
 
-export function TaskRow({ task, onToggleDone, onEdit, onDelete }: TaskRowProps) {
+export function TaskRow({ task, onStatusChange, onEdit, onDelete }: TaskRowProps) {
    const meta = STATUS_META[task.status]
    const done = task.status === "done"
 
    return (
       <div className="group relative flex gap-3 px-4 py-3 transition-colors hover:bg-muted/50">
-         <Checkbox
-            checked={done}
-            onCheckedChange={() => onToggleDone(task)}
-            className="mt-0.5 size-[18px]"
-            aria-label={done ? "Marcar como pendiente" : "Marcar como completada"}
-         />
+         <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+               <Button
+                  variant="ghost"
+                  size="icon"
+                  className="mt-0.5 size-[18px] shrink-0 rounded-full p-0 hover:bg-transparent"
+                  aria-label={`Estado: ${meta.label}. Cambiar estado`}
+               >
+                  <meta.icon className={cn("size-[18px]", meta.dot)} />
+               </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-44">
+               <DropdownMenuRadioGroup
+                  value={task.status}
+                  onValueChange={(value) => onStatusChange(task, value as TaskStatus)}
+               >
+                  {STATUS_ORDER.map((status) => {
+                     const statusMeta = STATUS_META[status]
+                     return (
+                        <DropdownMenuRadioItem key={status} value={status}>
+                           <statusMeta.icon className={cn("size-4", statusMeta.dot)} />
+                           {statusMeta.label}
+                        </DropdownMenuRadioItem>
+                     )
+                  })}
+               </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+         </DropdownMenu>
 
          <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
