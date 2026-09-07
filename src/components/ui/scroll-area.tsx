@@ -7,8 +7,17 @@ import { ScrollArea as ScrollAreaPrimitive } from "radix-ui"
 function ScrollArea({
   className,
   children,
+  orientation = "vertical",
+  hideScrollbar = false,
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & {
+  orientation?: "vertical" | "horizontal" | "both"
+  hideScrollbar?: boolean
+}) {
+  // The scrollbar stays rendered so Radix keeps the viewport scrollable; when
+  // hidden it's only made visually invisible, never removed.
+  const hidden = hideScrollbar ? "pointer-events-none opacity-0" : undefined
+
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
@@ -21,7 +30,12 @@ function ScrollArea({
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+      {orientation !== "horizontal" && (
+        <ScrollBar orientation="vertical" className={hidden} />
+      )}
+      {orientation !== "vertical" && (
+        <ScrollBar orientation="horizontal" className={hidden} />
+      )}
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   )
